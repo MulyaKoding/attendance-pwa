@@ -190,7 +190,7 @@ export default function DashboardPage() {
           </Link>
 
           <Link
-            href="/dashboard/change-pin"
+            href="/dashboard/change-password"
             className="bg-white rounded-xl p-4 border border-slate-200 hover:border-[#087463]/40 hover:shadow-md transition col-span-2"
           >
             <div className="h-9 w-9 rounded-lg bg-[#087463]/10 flex items-center justify-center mb-2">
