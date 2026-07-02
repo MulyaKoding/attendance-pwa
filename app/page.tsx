@@ -33,7 +33,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 px-4 py-10">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 h-14 w-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-md">
+          <div className="mx-auto mb-4 h-14 w-14 rounded-2xl bg-[#087463] flex items-center justify-center shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -67,7 +67,7 @@ export default function LoginPage() {
               className={`w-full rounded-lg border px-3.5 py-2.5 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:border-transparent transition ${
                 errors.mobile_phone_no
                   ? "border-red-400 focus:ring-red-400"
-                  : "border-slate-300 focus:ring-blue-500"
+                  : "border-slate-300 focus:ring-[#087463]"
               }`}
             />
             {errors.mobile_phone_no && (
@@ -89,13 +89,13 @@ export default function LoginPage() {
                 className={`w-full rounded-lg border px-3.5 py-2.5 pr-11 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:border-transparent transition ${
                   errors.password
                     ? "border-red-400 focus:ring-red-400"
-                    : "border-slate-300 focus:ring-blue-500"
+                    : "border-slate-300 focus:ring-[#087463]"
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-600"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-[#087463]"
                 tabIndex={-1}
               >
                 {showPassword ? (
@@ -118,7 +118,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full rounded-lg bg-blue-600 py-2.5 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transition"
+            className="w-full rounded-lg bg-[#087463] py-2.5 text-sm font-medium text-white shadow-sm hover:bg-[#065f51] focus:outline-none focus:ring-2 focus:ring-[#087463] focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {isLoading ? "Memproses..." : "Masuk"}
           </button>
