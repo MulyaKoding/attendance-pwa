@@ -11,7 +11,7 @@ import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, hasHydrated } = useAuthStore();
   const { logout } = useLogout();
   const { today, isLoading: loadingToday, mutate } = useTodayAttendance();
   const { clockIn, isLoading: clockingIn } = useClockIn();
@@ -19,8 +19,10 @@ export default function DashboardPage() {
   const [actionError, setActionError] = useState("");
 
   useEffect(() => {
+    // tunggu Zustand selesai rehydrate dari localStorage dulu
+    if (!hasHydrated) return;
     if (!isAuthenticated) router.replace("/");
-  }, [isAuthenticated, router]);
+  }, [hasHydrated, isAuthenticated, router]);
 
   const handleClockIn = async () => {
     setActionError("");
@@ -48,6 +50,15 @@ export default function DashboardPage() {
     await logout();
     router.push("/");
   };
+
+  // tampilkan loading sampai store selesai rehydrate, biar tidak flash/redirect salah
+  if (!hasHydrated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50">
+        <div className="h-8 w-8 border-2 border-[#087463] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   if (!user) return null;
 
