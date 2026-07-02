@@ -7,7 +7,6 @@ const navItems = [
   { href: "/dashboard", label: "Home", icon: "home" },
   { href: "/dashboard/calendar", label: "Calendar", icon: "calendar" },
   { href: "/dashboard/history", label: "History", icon: "clock" },
-  { href: "/dashboard/me", label: "Me", icon: "user" },
 ];
 
 const icons: Record<string, React.ReactNode> = {
