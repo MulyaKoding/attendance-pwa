@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useAuthStore } from "../../store/authStore"
 import BottomNav from "../../components/BottomNav"
@@ -17,16 +17,33 @@ export default function ChangePasswordPage() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState(false)
 
+  // pesan error khusus buat validasi konfirmasi password (real-time)
+  const [confirmError, setConfirmError] = useState("")
+
   // state buat toggle show/hide tiap field
   const [showCurrent, setShowCurrent] = useState(false)
   const [showNew, setShowNew] = useState(false)
   const [showConfirm, setShowConfirm] = useState(false)
+
+  // validasi real-time tiap newPassword atau confirmPassword berubah
+  useEffect(() => {
+    if (confirmPassword.length === 0) {
+      setConfirmError("")
+      return
+    }
+    if (newPassword !== confirmPassword) {
+      setConfirmError("Password tidak cocok")
+    } else {
+      setConfirmError("")
+    }
+  }, [newPassword, confirmPassword])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
     setSuccess(false)
 
+    // validasi cukup panjang aja, boleh angka semua / huruf semua / campur
     if (newPassword.length < 6) {
       setError("Password baru minimal 6 karakter")
       return
@@ -100,6 +117,19 @@ export default function ChangePasswordPage() {
         strokeLinejoin="round"
         d="M3 3l18 18M10.584 10.587a2 2 0 002.828 2.83M9.363 5.365A9.466 9.466 0 0112 5c4.478 0 8.268 2.943 9.542 7a10.523 10.523 0 01-4.293 5.309M6.228 6.228A10.45 10.45 0 002.458 12c1.274 4.057 5.065 7 9.542 7a9.478 9.478 0 004.635-1.229"
       />
+    </svg>
+  )
+
+  const CheckIcon = () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   )
 
@@ -204,7 +234,13 @@ export default function ChangePasswordPage() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full rounded-xl border-2 border-slate-300 px-3 py-2.5 pr-11 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#087463] focus:ring-2 focus:ring-[#087463]/40 transition"
+                className={`w-full rounded-xl border-2 px-3 py-2.5 pr-11 text-sm text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 transition ${
+                  confirmError
+                    ? "border-red-400 focus:border-red-500 focus:ring-red-400/40"
+                    : confirmPassword.length > 0
+                      ? "border-emerald-400 focus:border-emerald-500 focus:ring-emerald-400/40"
+                      : "border-slate-300 focus:border-[#087463] focus:ring-[#087463]/40"
+                }`}
               />
               <button
                 type="button"
@@ -215,11 +251,23 @@ export default function ChangePasswordPage() {
                 {showConfirm ? <EyeOffIcon /> : <EyeIcon />}
               </button>
             </div>
+
+            {/* pesan validasi real-time */}
+            {confirmError && (
+              <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                {confirmError}
+              </p>
+            )}
+            {!confirmError && confirmPassword.length > 0 && (
+              <p className="text-xs text-emerald-600 mt-1.5 flex items-center gap-1">
+                <CheckIcon /> Password cocok
+              </p>
+            )}
           </div>
 
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isLoading || !!confirmError}
             className="w-full rounded-xl bg-[#087463] py-3 text-sm font-semibold text-white hover:bg-[#087463]/90 disabled:opacity-60 transition"
           >
             {isLoading ? "Menyimpan..." : "Save New Password"}
