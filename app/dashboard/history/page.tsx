@@ -26,10 +26,15 @@ type AttendanceItem = {
 }
 
 function StatusBadge({ item }: { item: AttendanceItem }) {
-  // Ada keterangan dari attncodemst (sakit, izin, cuti, dll) -> paling prioritas ditampilkan
+  // Ada keterangan dari attncodemst (hadir, sakit, izin, cuti, dll)
   if (item.keterangan) {
+    const isHadir = item.keterangan.trim().toLowerCase() === "hadir"
     return (
-      <span className="inline-block text-[10px] font-medium text-amber-700 bg-amber-50 rounded-full px-2.5 py-1">
+      <span
+        className={`inline-block text-[10px] font-medium rounded-full px-2.5 py-1 ${
+          isHadir ? "text-green-700 bg-green-50" : "text-red-700 bg-red-50"
+        }`}
+      >
         {item.keterangan.toUpperCase()}
       </span>
     )
@@ -56,7 +61,7 @@ function StatusBadge({ item }: { item: AttendanceItem }) {
   // Ada clock in & out tapi gak ada keterangan spesifik dari BE -> tetap "Hadir" biasa,
   // disamakan tampilannya dengan kasus keterangan="Hadir" dari data manual di atas
   return (
-    <span className="inline-block text-[10px] font-medium text-amber-700 bg-amber-50 rounded-full px-2.5 py-1">
+    <span className="inline-block text-[10px] font-medium text-green-700 bg-green-50 rounded-full px-2.5 py-1">
       HADIR
     </span>
   )
