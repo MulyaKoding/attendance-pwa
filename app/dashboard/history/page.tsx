@@ -53,9 +53,11 @@ function StatusBadge({ item }: { item: AttendanceItem }) {
     )
   }
 
+  // Ada clock in & out tapi gak ada keterangan spesifik dari BE -> tetap "Hadir" biasa,
+  // disamakan tampilannya dengan kasus keterangan="Hadir" dari data manual di atas
   return (
-    <span className="inline-block text-[10px] font-medium text-blue-600 bg-blue-50 rounded-full px-2.5 py-1">
-      RECORDED
+    <span className="inline-block text-[10px] font-medium text-amber-700 bg-amber-50 rounded-full px-2.5 py-1">
+      HADIR
     </span>
   )
 }
